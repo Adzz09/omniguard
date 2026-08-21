@@ -25,3 +25,5 @@ out/
 captures/
 .externalNativeBuild/
 .cxx/
+*.jks
+*.keystore

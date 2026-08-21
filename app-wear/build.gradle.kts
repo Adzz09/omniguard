@@ -17,6 +17,29 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "omniguard-release.jks"
+            val keystoreFile = rootProject.file(keystorePath)
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "OmniGuardReleaseKey2026!"
+                keyAlias = System.getenv("KEY_ALIAS") ?: "omniguard"
+                keyPassword = System.getenv("KEY_PASSWORD") ?: "OmniGuardReleaseKey2026!"
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            val releaseSigning = signingConfigs.getByName("release")
+            if (releaseSigning.storeFile != null) {
+                signingConfig = releaseSigning
+            }
+        }
+    }
+
     buildFeatures {
         compose = true
     }
