@@ -1,0 +1,27 @@
+# Gradle files
+.gradle/
+build/
+**/build/
+
+# Local configuration
+local.properties
+.idea/
+*.iml
+.DS_Store
+*.apk
+*.aab
+
+# Java / Kotlin
+*.class
+*.jar
+*.war
+*.ear
+.kotlin/
+
+# Android Studio / IntelliJ
+.idea/
+*.iws
+out/
+captures/
+.externalNativeBuild/
+.cxx/
