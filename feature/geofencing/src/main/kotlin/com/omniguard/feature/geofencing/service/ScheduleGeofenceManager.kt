@@ -40,7 +40,7 @@ class ScheduleGeofenceManager(
     val emergencyContacts: StateFlow<List<EmergencyContact>> = _emergencyContacts.asStateFlow()
 
     private val _transitLogs = MutableStateFlow<List<TransitLog>>(emptyList())
-    val transitLogs: StateFlow<List<TransitLog>>(emptyList()) get() = _transitLogs.asStateFlow()
+    val transitLogs: StateFlow<List<TransitLog>> = _transitLogs.asStateFlow()
 
     // Tracks current presence for each zone: zoneId -> isInside
     private val zonePresenceMap = mutableMapOf<String, Boolean>()
