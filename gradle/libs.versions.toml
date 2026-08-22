@@ -21,8 +21,10 @@ junit5 = "5.11.3"
 junit4 = "4.13.2"
 mockk = "1.13.13"
 turbine = "1.2.0"
+guava = "33.3.1-android"
 
 [libraries]
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 junit = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }

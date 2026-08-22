@@ -1,14 +1,17 @@
 package com.omniguard.wear.ui.screens
 
+import androidx.wear.protolayout.ColorBuilders
 import androidx.wear.protolayout.LayoutElementBuilders
+import androidx.wear.protolayout.ModifiersBuilders
 import androidx.wear.protolayout.ResourceBuilders
 import androidx.wear.protolayout.TimelineBuilders
 import androidx.wear.protolayout.material.Button
 import androidx.wear.protolayout.material.ButtonColors
-import androidx.wear.protolayout.material.ColorBuilders
+import androidx.wear.protolayout.material.Colors
 import androidx.wear.protolayout.material.Text
 import androidx.wear.protolayout.material.Typography
 import androidx.wear.protolayout.material.layouts.PrimaryLayout
+import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.TileBuilders
 import androidx.wear.tiles.TileService
 import com.google.common.util.concurrent.Futures
@@ -19,7 +22,10 @@ import com.google.common.util.concurrent.ListenableFuture
  */
 class WearSilentSosTileService : TileService() {
 
-    override fun onTileRequest(requestParams: TileBuilders.TileRequest): ListenableFuture<TileBuilders.Tile> {
+    override fun onTileRequest(requestParams: RequestBuilders.TileRequest): ListenableFuture<TileBuilders.Tile> {
+        val clickable = ModifiersBuilders.Clickable.Builder().build()
+        val colors = Colors(0xFFFF3B30.toInt(), 0xFFFFFFFF.toInt(), 0xFF000000.toInt(), 0xFFFFFFFF.toInt())
+
         val layout = PrimaryLayout.Builder(requestParams.deviceConfiguration)
             .setPrimaryLabelTextContent(
                 Text.Builder(this, "OmniGuard SOS")
@@ -28,9 +34,9 @@ class WearSilentSosTileService : TileService() {
                     .build()
             )
             .setContent(
-                Button.Builder(this, {})
+                Button.Builder(this, clickable)
                     .setTextContent("HOLD 3X\nPANIC")
-                    .setButtonColors(ButtonColors.primaryButtonColors(ColorBuilders.argb(0xFFFF3B30.toInt()), ColorBuilders.argb(0xFFFFFFFF.toInt())))
+                    .setButtonColors(ButtonColors.primaryButtonColors(colors))
                     .build()
             )
             .setSecondaryLabelTextContent(
@@ -51,13 +57,13 @@ class WearSilentSosTileService : TileService() {
 
         val tile = TileBuilders.Tile.Builder()
             .setResourcesVersion("1")
-            .setTimeline(timeline)
+            .setTileTimeline(timeline)
             .build()
 
         return Futures.immediateFuture(tile)
     }
 
-    override fun onTileResourcesRequest(requestParams: TileBuilders.TileResourcesRequest): ListenableFuture<ResourceBuilders.Resources> {
+    override fun onTileResourcesRequest(requestParams: RequestBuilders.ResourcesRequest): ListenableFuture<ResourceBuilders.Resources> {
         val resources = ResourceBuilders.Resources.Builder()
             .setVersion("1")
             .build()

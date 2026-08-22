@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.androidx.wear.tiles.material)
     implementation(libs.androidx.wear.protolayout)
     implementation(libs.androidx.wear.protolayout.material)
+    implementation(libs.guava)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

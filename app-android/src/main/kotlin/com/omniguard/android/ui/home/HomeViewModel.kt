@@ -49,16 +49,27 @@ class HomeViewModel(
     private val _isSosDispatched = MutableStateFlow(false)
     private val _lastBroadcastMessage = MutableStateFlow<String?>(null)
 
-    private var sosCountdownJob: Job? = null
+    private data class SosState(
+        val isActive: Boolean = false,
+        val countdownSeconds: Int = 5,
+        val isDispatched: Boolean = false,
+        val message: String? = null
+    )
 
-    val uiState: StateFlow<HomeUiState> = combine(
-        geofenceManager.safeZones,
-        _watchState,
+    private val _sosState = combine(
         _isSosActive,
         _sosCountdownSeconds,
         _isSosDispatched,
         _lastBroadcastMessage
-    ) { safeZones, watch, sosActive, countdown, dispatched, msg ->
+    ) { active, countdown, dispatched, msg ->
+        SosState(active, countdown, dispatched, msg)
+    }
+
+    val uiState: StateFlow<HomeUiState> = combine(
+        geofenceManager.safeZones,
+        _watchState,
+        _sosState
+    ) { safeZones, watch, sos ->
         val now = LocalDateTime.now()
         val currentDay = now.dayOfWeek
         val currentTime = now.toLocalTime()
@@ -69,10 +80,10 @@ class HomeViewModel(
             activeGeofences = safeZones.filter { it.isEnabled },
             activeSchedulesCount = activeCount,
             watchState = watch,
-            isSosActive = sosActive,
-            sosCountdownSeconds = countdown,
-            isSosDispatched = dispatched,
-            lastBroadcastMessage = msg
+            isSosActive = sos.isActive,
+            sosCountdownSeconds = sos.countdownSeconds,
+            isSosDispatched = sos.isDispatched,
+            lastBroadcastMessage = sos.message
         )
     }.stateIn(
         scope = viewModelScope,
