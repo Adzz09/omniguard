@@ -48,6 +48,7 @@ class HomeViewModel(
     private val _sosCountdownSeconds = MutableStateFlow(5)
     private val _isSosDispatched = MutableStateFlow(false)
     private val _lastBroadcastMessage = MutableStateFlow<String?>(null)
+    private var sosCountdownJob: Job? = null
 
     private data class SosState(
         val isActive: Boolean = false,
