@@ -35,10 +35,16 @@ fun OmniGuardNavHost(
         modifier = modifier
     ) {
         composable(Screen.Onboarding.route) {
+            val context = androidx.compose.ui.platform.LocalContext.current
             val onboardingVm: OnboardingViewModel = viewModel()
             OnboardingFlowContainer(
                 viewModel = onboardingVm,
                 onOnboardingComplete = {
+                    try {
+                        OmniGuardForegroundService.startService(context)
+                    } catch (e: Exception) {
+                        // Handled safely
+                    }
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Onboarding.route) { inclusive = true }
                     }
