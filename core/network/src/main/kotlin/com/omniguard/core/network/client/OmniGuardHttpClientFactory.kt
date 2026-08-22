@@ -9,8 +9,7 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.websocket.WebSockets
-import io.ktor.client.plugins.websocket.pingPeriod
-import io.ktor.client.plugins.websocket.timeout
+import io.ktor.client.plugins.websocket.pingInterval
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
@@ -40,8 +39,7 @@ object OmniGuardHttpClientFactory {
             }
 
             install(WebSockets) {
-                pingPeriod = pingIntervalSeconds.seconds
-                timeout = 30.seconds
+                pingInterval = pingIntervalSeconds.seconds
                 maxFrameSize = Long.MAX_VALUE
             }
 
