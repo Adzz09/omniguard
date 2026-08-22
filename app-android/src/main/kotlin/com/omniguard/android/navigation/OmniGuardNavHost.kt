@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.omniguard.android.OmniGuardApplication
+import com.omniguard.android.service.OmniGuardForegroundService
 import com.omniguard.android.ui.duress.DuressPinScreen
 import com.omniguard.android.ui.duress.DuressPinViewModel
 import com.omniguard.android.ui.guidemehome.GuideMeHomeMapScreen
